@@ -30,5 +30,5 @@ npm run dev
 npm run build
 ```
 ## Notes
-- For dev environment, please use `http://localhost:8080/` url in the browser.
+- For dev environment, please use `http://localhost:8082/` url in the browser.
 - Build files location `/public`
