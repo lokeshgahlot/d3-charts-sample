@@ -1,4 +1,4 @@
-# ES6 boilerplate webpack setup
+# D3 Charts Samples
 
 ## Setup
 
