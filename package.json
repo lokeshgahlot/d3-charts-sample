@@ -9,6 +9,8 @@
   },
   "author": "Lokesh Gahlot",
   "dependencies": {
+    "bootstrap": "4.0.0-beta.2",
+    "crossfilter": "^1.3.12",
     "d3": "^4.12.0"
   },
   "devDependencies": {
