@@ -1,11 +1,11 @@
 import './multiSeriesLineChart.scss';
 import * as d3 from 'd3';
 
-export default () => {
+export default (selector) => {
   const svgWidth = 960;
   const svgHeight = 500;
 
-  const svg = d3.select('.root')
+  const svg = d3.select(selector || '.root')
     .append('svg')
     .attr('width', svgWidth)
     .attr('height', svgHeight);

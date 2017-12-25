@@ -1,7 +1,7 @@
 //http://bl.ocks.org/d3noob/8dc93bce7e7200ab487d
 import * as d3 from 'd3';
 
-export default () => {
+export default (selector) => {
   const margin = {
     top: 20,
     left: 20,
@@ -11,7 +11,7 @@ export default () => {
 
   const svgWidth = 800;
   const svgHeight = 600;
-  const svg = d3.select('.root')
+  const svg = d3.select(selector || '.root')
     .append('svg')
     .attr('width', svgWidth + margin.left+margin.right)
     .attr('height', svgHeight + margin.top + margin.bottom);
