@@ -1,0 +1,14 @@
+// @import "~bootstrap/scss/bootstrap";
+$font-stack: 14px 'Helvetica', sans-serif;
+* {
+    box-sizing: border-box;
+}
+
+body {
+  font: $font-stack;
+}
+
+body, div, span, canvas, button, p, header {
+  margin: 0;
+  padding: 0
+}
