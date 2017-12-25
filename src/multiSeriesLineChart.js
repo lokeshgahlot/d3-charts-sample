@@ -34,7 +34,7 @@ export default (selector) => {
     .x(d => x(d.date))
     .y(d => y(d.temperature));
 
-    d3.tsv('./data.tsv', (d, _, columns) => {
+    d3.tsv('./data/multiSeriesLineChart.tsv', (d, _, columns) => {
       d.date = parseTime(d.date);
       // converts string to number
       for (let i = 1, n = columns.length, c; i < n; ++i) d[c = columns[i]] = +d[c];
