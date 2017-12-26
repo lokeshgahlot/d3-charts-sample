@@ -21,4 +21,18 @@
       display: none;
     }
   }
+
+  #gatenames {
+    svg {
+      overflow: visible;
+    }
+    .x.axis {
+      .tick {
+        text {
+          text-anchor: end;
+          transform: rotate(-45deg) translate(-6px, -1px);
+        }
+      }
+    }
+  }
 }

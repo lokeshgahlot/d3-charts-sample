@@ -6,8 +6,10 @@ import crossfilter from 'crossfilter';
 import barChart from './reusable-charts/bar';
 import timeSeriesChart from './reusable-charts/timeline';
 
+
 export default (selector) => {
   const timelineChart = timeSeriesChart()
+    .width(900)
     .x(d => d.key)
     .y(d => d.value);
 
@@ -26,19 +28,35 @@ export default (selector) => {
     d.Timestamp = timeFormat(d.Timestamp);
     return d;
   },
-    (error, data) => {
-      if(error) throw error;
+  (error, data) => {
+    if(error) throw error;
 
-      const csData = crossfilter(data);
-      csData.dimTime = csData.dimension(d=>d.Timestamp);
-      csData.dimGates = csData.dimension(d=>d['gate-name']);
-      csData.dimCars = csData.dimension(d=>d['car-type']);
+    const csData = crossfilter(data);
+    csData.dimTime = csData.dimension(d=>d.Timestamp);
+    csData.dimGates = csData.dimension(d=>d['gate-name']);
+    csData.dimCars = csData.dimension(d=>d['car-type']);
 
-      csData.timeHours = csData.dimTime.group(d3.timeHour);
-      csData.gates = csData.dimGates.group();
-      csData.cars = csData.dimCars.group();
+    csData.timeHours = csData.dimTime.group(d3.timeHour);
+    csData.gates = csData.dimGates.group();
+    csData.cars = csData.dimCars.group();
 
+    carBarChart.onMouseOver(d => {
+      csData.dimCars.filter(d.key);
+      update();
+    }).onMouseOut(_=> {
+      csData.dimCars.filterAll();
+      update();
+    });
 
+    gatesBarChart.onMouseOver(d => {
+      csData.dimGates.filter(d.key);
+      update();
+    }).onMouseOut(_=> {
+      csData.dimGates.filterAll();
+      update();
+    })
+
+    const update = () => {
       d3.selectAll('#timeline')
         .datum(csData.timeHours.all())
         .call(timelineChart);
@@ -49,7 +67,9 @@ export default (selector) => {
 
       d3.select('#gatenames')
         .datum(csData.gates.all())
-        .call(gatesBarChart);
-    });
+        .call(gatesBarChart)
+    }
 
+    update(csData);
+  });
 }
