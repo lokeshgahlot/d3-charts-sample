@@ -54,7 +54,13 @@ export default (selector) => {
     }).onMouseOut(_=> {
       csData.dimGates.filterAll();
       update();
-    })
+    });
+
+    timelineChart.onBrushed((selected)=> {
+      console.log('selected', selected);
+      csData.dimTime.filter(selected);
+      update();
+    });
 
     const update = () => {
       d3.selectAll('#timeline')

@@ -10,7 +10,8 @@ function timeSeriesChart() {
     xScale = d3.scaleTime(),
     yScale = d3.scaleLinear(),
     area = d3.area().x(X).y1(Y),
-    line = d3.line().x(X).y(Y);
+    line = d3.line().x(X).y(Y),
+    onBrushed = (selected)=> {};
 
   function chart(selection) {
     selection.each(function(data) {
@@ -40,7 +41,15 @@ function timeSeriesChart() {
       gEnter.append("path").attr("class", "area");
       gEnter.append("path").attr("class", "line");
       gEnter.append("g").attr("class", "x axis");
-
+      gEnter.append('g')
+        .attr('class', 'brush')
+        .call(d3.brushX()
+            .extent([
+              [0,0],
+              [xScale.range()[1], yScale.range()[0]]
+            ])
+            .on('brush', brushed)
+          );
       // Update the outer dimensions.
       svg.merge(svgEnter).attr("width", width)
           .attr("height", height);
@@ -62,6 +71,13 @@ function timeSeriesChart() {
           .attr("transform", "translate(0," + yScale.range()[0] + ")")
           .call(d3.axisBottom(xScale).tickSize(6, 0));
     });
+  }
+
+  function brushed() {
+    if (!d3.event.sourceEvent) return; // Only transition after input.
+    if (!d3.event.selection) return; // Ignore empty selections.
+    var selected = d3.event.selection.map(xScale.invert);
+    onBrushed(selected);
   }
 
   // The x-accessor for the path generator; xScale ∘ xValue.
@@ -101,6 +117,12 @@ function timeSeriesChart() {
   chart.y = function(_) {
     if (!arguments.length) return yValue;
     yValue = _;
+    return chart;
+  };
+
+  chart.onBrushed = function(_) {
+    if (!arguments.length) return onBrushed;
+    onBrushed = _;
     return chart;
   };
 
