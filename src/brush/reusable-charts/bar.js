@@ -25,6 +25,9 @@ function barChart() {
       gEnter.append("g").attr("class", "x axis");
       gEnter.append("g").attr("class", "y axis");
 
+      innerWidth = width - margin.left - margin.right;
+      innerHeight = height - margin.top - margin.bottom;
+
       // Update the outer dimensions.
       svg.merge(svgEnter).attr("width", width)
         .attr("height", height);

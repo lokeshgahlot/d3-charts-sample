@@ -1,0 +1,24 @@
+#brush-sample {
+  .line {
+    fill: none;
+    stroke: #000;
+    stroke-width: 1.5px;
+  }
+
+  .area {
+    fill: #969696;
+  }
+
+  .bar {
+    fill: steelblue;
+    &:hover {
+      fill: brown;
+    }
+  }
+
+  .x.axis {
+    path {
+      display: none;
+    }
+  }
+}

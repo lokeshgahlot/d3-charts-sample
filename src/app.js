@@ -5,8 +5,8 @@ import brush from './brush';
 
 
 const App = () => {
-  multiSeriesLineChart('#multi-series-line-chart');
-  scalesExample('#scale-samples');
+  // multiSeriesLineChart('#multi-series-line-chart');
+  // scalesExample('#scale-samples');
   brush('#brush-sample')
 }
 
