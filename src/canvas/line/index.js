@@ -1,8 +1,5 @@
 import * as d3 from 'd3';
 
-
-
-
 export default (selector) => {
   const container = document.querySelector(selector);
   const canvas = container.querySelector('canvas');
@@ -46,19 +43,54 @@ export default (selector) => {
       context.lineTo(x(d), height+tickSize)
     });
 
-    context.strokeStyle = 'black';
+    context.strokeStyle = "steelblue";
     context.stroke();
 
-    context.textAlign = 'center';
-    context.textBaseline = 'top';
+    context.textAlign = "center";
+    context.textBaseline = "top";
 
-    tick.forEach(d=> {
-      context.fillText(tickFormar(d), x(d), height+tickSize);
-    })
+    ticks.forEach(d=> {
+      context.fillText(tickFormat(d), x(d), height+tickSize);
+    });
   }
 
   const yAxis = () => {
+    const tickCount = 10;
+    const tickSize = 6;
+    const tickPadding = 3;
+    const ticks = y.ticks(tickCount);
+    const tickFormat = y.tickFormat(tickCount);
 
+    context.beginPath();
+    ticks.forEach(d=>{
+      context.moveTo(0, y(d));
+      context.lineTo(-tickSize, y(d));
+    });
+
+    context.strokeStyle = 'black';
+    context.stroke();
+
+    context.beginPath();
+    context.moveTo(-tickSize, 0);
+    context.lineTo(0.5, 0);
+    context.lineTo(0.5, height);
+    context.lineTo(-tickSize, height);
+
+    context.strokeStyle = 'black';
+    context.stroke();
+
+    context.textAlign = 'right';
+    context.textBaseline = 'middle';
+    ticks.forEach(d => {
+      context.fillText(tickFormat(d), -tickSize - tickPadding, y(d));
+    });
+    context.save();
+    context.rotate(-Math.PI/2);
+    context.textAlign = 'right';
+    context.textBaseline = 'top';
+    context.font = 'bold 10px sans-serif';
+    context.fillText('Price (US$)', -10, 10);
+    context.restore();
   }
 
   d3.tsv('data/canvas-line-data.tsv',
@@ -78,9 +110,7 @@ export default (selector) => {
       context.beginPath();
       line(data);
       context.lineWidth = 1.5;
-      context.strokeStyle = 'steelblue';
+      context.strokeStyle = 'tomato';
       context.stroke();
-
-
     });
 }
